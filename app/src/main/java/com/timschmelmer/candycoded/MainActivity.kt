@@ -1,6 +1,7 @@
 package com.timschmelmer.candycoded
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
@@ -9,8 +10,6 @@ import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.AdapterView
-
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,9 +46,15 @@ class MainActivity : AppCompatActivity() {
 
         listView.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(adapterView: AdapterView<*>, view: View, i: Int, l: Long) {
-                val newToast = Toast.makeText(this@MainActivity, "" + i, Toast.LENGTH_SHORT)
-                newToast.show()
+//                val newToast = Toast.makeText(this@MainActivity, "" + i, Toast.LENGTH_SHORT)
+//                newToast.show()
+                val detailIntent =
+                        Intent(this@MainActivity, DetailActivity::class.java)
+                detailIntent.putExtra("candy_name", candyList[i])
+                startActivity(detailIntent)
             }
         }
+
+
     }
 }
