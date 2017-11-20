@@ -3,7 +3,9 @@ package com.timschmelmer.candycoded
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 
 class DetailActivity : AppCompatActivity() {
 
@@ -20,7 +22,14 @@ class DetailActivity : AppCompatActivity() {
         val candyParts = mutableListOf<String>(candyName, candyPrice, candyImage, candyDesc)
         Log.d("DetailActivity", "Intent data: " + candyParts.joinToString(", "))
 
-        val textView = findViewById<TextView>(R.id.text_view_name)
-        textView.text = candyName
+        val textViewName = findViewById<TextView>(R.id.text_view_name)
+        textViewName.text = candyName
+        val textViewPrice = findViewById<TextView>(R.id.text_view_price)
+        textViewPrice.text = candyPrice
+        val textViewDesc = findViewById<TextView>(R.id.text_view_desc)
+        textViewDesc.text = candyDesc
+        val imageView = findViewById<ImageView>(R.id.image_view_candy)
+        Picasso.with(this).load(candyImage).into(imageView)
+
     }
 }
