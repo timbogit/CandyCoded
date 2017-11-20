@@ -14,10 +14,16 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         val intent = this@DetailActivity.intent
-        val candyName = if (intent.hasExtra("candy_name")) intent.getStringExtra("candy_name") else ""
-        val candyImage = if (intent.hasExtra("candy_image")) intent.getStringExtra("candy_image") else ""
-        val candyPrice = if (intent.hasExtra("candy_price")) intent.getStringExtra("candy_price") else "0"
-        val candyDesc = if (intent.hasExtra("candy_desc")) intent.getStringExtra("candy_desc") else ""
+        val position = if (intent.hasExtra("position")) intent.getIntExtra("position", 0) else 0
+        val candyDbHelper = CandyDbHelper(this)
+        val db = candyDbHelper.writableDatabase
+        val cursor = db.rawQuery("SELECT * from " + CandyContract.CandyEntry.TABLE_NAME, null)
+        cursor.moveToPosition(position)
+
+        val candyName = cursor.getString(cursor.getColumnIndexOrThrow(CandyContract.CandyEntry.COLUMN_NAME_NAME))
+        val candyImage = cursor.getString(cursor.getColumnIndexOrThrow(CandyContract.CandyEntry.COLUMN_NAME_IMAGE))
+        val candyPrice = cursor.getString(cursor.getColumnIndexOrThrow(CandyContract.CandyEntry.COLUMN_NAME_PRICE))
+        val candyDesc = cursor.getString(cursor.getColumnIndexOrThrow(CandyContract.CandyEntry.COLUMN_NAME_DESC))
 
         val candyParts = mutableListOf<String>(candyName, candyPrice, candyImage, candyDesc)
         Log.d("DetailActivity", "Intent data: " + candyParts.joinToString(", "))
